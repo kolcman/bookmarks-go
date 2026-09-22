@@ -16,6 +16,7 @@ func main() {
 	}
 }
 
+// ShowMenu показывает пользователю меню
 func showMenu() {
 	fmt.Print(`
 *--------------------------*
@@ -29,6 +30,7 @@ func showMenu() {
 Ваш выбор: `)
 }
 
+// HandleChoice обрабатывает выбор пользователя в меню приложения
 func handleChoice(choice string) {
 	switch choice {
 	case "1":
@@ -36,12 +38,23 @@ func handleChoice(choice string) {
 	case "2":
 		addBokmark()
 	case "3":
-	// removeBokmark()
+		removeBokmark()
 	default:
 		fmt.Println("Неккоректный ввод!")
 	}
 }
 
+// GetValue запрашивает у пользователя ввод,
+// принимает имя или адрес закладки через параметр @typeValue string,
+// возвращает ввод string
+func getValue(typeValue string) string {
+	var input string
+	fmt.Printf("Введите %s закладки: ", typeValue)
+	fmt.Scan(&input)
+	return input
+}
+
+// ShowBookmarks выводит все закладки
 func showBookmarks() {
 	for k, v := range bookmarks {
 		fmt.Printf("Название: %s - адресс: %s\n", k, v)
@@ -49,15 +62,15 @@ func showBookmarks() {
 	fmt.Print("\n\n\n")
 }
 
+// AddBokmark добавляет закладку
 func addBokmark() {
 	name := getValue("имя")
 	url := getValue("адрес")
 	bookmarks[name] = url
 }
 
-func getValue(typeValue string) string {
-	var input string
-	fmt.Printf("Введите %s закладки: ", typeValue)
-	fmt.Scan(&input)
-	return input
+// RemoveBokmark удаляет закладку по имени
+func removeBokmark() {
+	name := getValue("имя")
+	delete(bookmarks, name)
 }
