@@ -7,7 +7,12 @@ var bookmarks = map[string]string{}
 func main() {
 	for {
 		showMenu()
-		handleChoice()
+		var choice string
+		fmt.Scan(&choice)
+		if choice == "q" {
+			break
+		}
+		handleChoice(choice)
 	}
 }
 
@@ -24,9 +29,7 @@ func showMenu() {
 Ваш выбор: `)
 }
 
-func handleChoice() {
-	var choice string
-	fmt.Scan(&choice)
+func handleChoice(choice string) {
 	switch choice {
 	case "1":
 		showBookmarks()
@@ -34,17 +37,27 @@ func handleChoice() {
 		addBokmark()
 	case "3":
 	// removeBokmark()
-	case "q", "Q", "й", "Й":
-		return
+	default:
+		fmt.Println("Неккоректный ввод!")
 	}
 }
 
 func showBookmarks() {
 	for k, v := range bookmarks {
-		fmt.Printf("Название: %s - адресс: %s\n\n\n", k, v)
+		fmt.Printf("Название: %s - адресс: %s\n", k, v)
 	}
+	fmt.Print("\n\n\n")
 }
 
 func addBokmark() {
+	name := getValue("имя")
+	url := getValue("адрес")
+	bookmarks[name] = url
+}
 
+func getValue(typeValue string) string {
+	var input string
+	fmt.Printf("Введите %s закладки: ", typeValue)
+	fmt.Scan(&input)
+	return input
 }
